@@ -646,7 +646,10 @@ namespace RateMyApp.UWP.Controls
         /// </summary>
         private void AttachBackKeyPressed()
         {
-            Windows.Phone.UI.Input.HardwareButtons.BackPressed += FeedbackOverlay_BackKeyPress;
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+            {
+                Windows.Phone.UI.Input.HardwareButtons.BackPressed += FeedbackOverlay_BackKeyPress;
+            }
         }
 
         /// <summary>
