@@ -492,6 +492,57 @@ namespace RateMyApp.UWP.Controls
 
         #endregion
 
+        // Use this for detecting visibility change on code
+        public event EventHandler VisibilityChanged = null;
+
+        // Title of the review/feedback notification
+        private string Title
+        {
+            set
+            {
+                if (title.Text != value)
+                {
+                    title.Text = value;
+                }
+            }
+        }
+
+        // Message of the review/feedback notification
+        private string Message
+        {
+            set
+            {
+                if (message.Text != value)
+                {
+                    message.Text = value;
+                }
+            }
+        }
+
+        // Button text for not acting upon review/feedback notification
+        private string NoText
+        {
+            set
+            {
+                if ((string)noButton.Content != value)
+                {
+                    noButton.Content = value;
+                }
+            }
+        }
+
+        // Button text for acting upon review/feedback notification
+        private string YesText
+        {
+            set
+            {
+                if ((string)yesButton.Content != value)
+                {
+                    yesButton.Content = value;
+                }
+            }
+        }
+
         public FeedbackOverlay()
         {
             this.InitializeComponent();
