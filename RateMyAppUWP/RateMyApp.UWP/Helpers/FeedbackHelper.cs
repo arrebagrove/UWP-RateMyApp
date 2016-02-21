@@ -16,7 +16,9 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
+using Windows.ApplicationModel;
 using Windows.Storage;
+using Windows.System;
 
 namespace RateMyApp.UWP.Helpers
 {
@@ -238,25 +240,32 @@ namespace RateMyApp.UWP.Helpers
         public async void Review()
         {
             Reviewed();
-            string appid = "";
-            var uri = new Uri("ms-appx:///AppxManifest.xml");
-            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(uri);
-            using (var rastream = await file.OpenReadAsync())
-            using (var appManifestStream = rastream.AsStreamForRead())
-            {
-                using (var reader = XmlReader.Create(appManifestStream, new XmlReaderSettings { IgnoreWhitespace = true, IgnoreComments = true }))
-                {
-                    var doc = XDocument.Load(reader);
-                    var app = doc.Descendants().FirstOrDefault(e => e.Name.LocalName == "PhoneIdentity");
-                    var idAttribute = app?.Attribute("PhoneProductId");
-                    if (idAttribute != null)
-                    {
-                        appid = idAttribute.Value;
-                    }
-                }
-            }
 
-            await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store:reviewapp?appid=" + appid));
+            // some funking 8.1 code, it looks very NB, but it blows up on UWP
+
+            //string appid = "";
+            //var uri = new Uri("ms-appx:///AppxManifest.xml");
+            //StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(uri);
+            //using (var rastream = await file.OpenReadAsync())
+            //using (var appManifestStream = rastream.AsStreamForRead())
+            //{
+            //    using (var reader = XmlReader.Create(appManifestStream, new XmlReaderSettings { IgnoreWhitespace = true, IgnoreComments = true }))
+            //    {
+            //        var doc = XDocument.Load(reader);
+            //        var app = doc.Descendants().FirstOrDefault(e => e.Name.LocalName == "PhoneIdentity");
+            //        var idAttribute = app?.Attribute("PhoneProductId");
+            //        if (idAttribute != null)
+            //        {
+            //            appid = idAttribute.Value;
+            //        }
+            //    }
+            //}
+
+            //await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store:reviewapp?appid=" + appid));
+
+            // now, this is the correct way to review an UWP app
+            var pfn = Package.Current.Id.FamilyName;
+            await Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?PFN=" + pfn));
         }
     }
 }
