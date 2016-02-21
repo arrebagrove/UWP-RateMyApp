@@ -4,7 +4,6 @@ https://github.com/Microsoft/rate-my-app UWP version
 Known issues
 ------------
 - Overlay get overlayed by some certain control
-- Can not get correct store links for UWP Apps, so basically it can't rate your app :(
 
 Rate My App
 ===========
