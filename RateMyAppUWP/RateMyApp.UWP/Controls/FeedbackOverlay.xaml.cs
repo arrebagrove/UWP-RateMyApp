@@ -2,10 +2,7 @@
 using System.Xml;
 using System.Xml.Linq;
 using System;
-using System.ComponentModel;
 using System.Globalization;
-using System.Threading;
-using System.Windows;
 using RateMyApp.UWP.Helpers;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
@@ -14,7 +11,6 @@ using Windows.ApplicationModel.Email;
 using System.IO;
 using Windows.Storage;
 using Windows.Security.ExchangeActiveSyncProvisioning;
-using Windows.ApplicationModel.Resources;
 using RateMyApp.UWP.Resources;
 using DoubleAnimation = Windows.UI.Xaml.Media.Animation.DoubleAnimation;
 using Colors = Windows.UI.Colors;
@@ -545,7 +541,416 @@ namespace RateMyApp.UWP.Controls
 
         public FeedbackOverlay()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+
+            yesButton.Click += yesButton_Click;
+            noButton.Click += noButton_Click;
+            Loaded += FeedbackOverlay_Loaded;
+            hideContent.Completed += hideContent_Completed;
+        }
+
+        /// <summary>
+        /// Reset review and feedback funtionality. Makes notifications active
+        /// again, for example, after a major application update.
+        /// </summary>
+        public void Reset()
+        {
+            FeedbackHelper.Default.Reset();
+        }
+
+        /// <summary>
+        /// Reset review and feedback funtionality. Makes notifications active
+        /// again, for example, after a major application update.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FeedbackOverlay_Loaded(object sender, RoutedEventArgs e)
+        {
+            // FeedbackTo property is mandatory and must be defined in xaml.
+            if (GetFeedbackTo(this) == null || GetFeedbackTo(this).Length <= 0)
+            {
+                throw new ArgumentNullException("FeedbackTo", "Mandatory property not defined in FeedbackOverlay.");
+            }
+
+            // ApplicationName property is mandatory and must be defined in xaml.
+            if (GetApplicationName(this) == null || GetApplicationName(this).Length <= 0)
+            {
+                throw new ArgumentNullException("ApplicationName", "Mandatory property not defined in FeedbackOverlay.");
+            }
+
+            // CompanyName property is mandatory and must be defined in xaml.
+            if (GetCompanyName(this) == null || GetCompanyName(this).Length <= 0)
+            {
+                throw new ArgumentNullException("CompanyName", "Mandatory property not defined in FeedbackOverlay.");
+            }
+
+            // Application language override.
+            if (GetLanguageOverride(this) != null)
+            {
+                OverrideLanguage();
+            }
+
+            // Set up FeedbackHelper with properties.
+            FeedbackHelper.Default.FirstCount = GetFirstCount(this);
+            FeedbackHelper.Default.SecondCount = GetSecondCount(this);
+            FeedbackHelper.Default.CountDays = GetCountDays(this);
+
+            // Inform FeedbackHelper of the creation of this control.
+            FeedbackHelper.Default.Launching();
+
+            // This class needs to be aware of Back key presses.
+            AttachBackKeyPressed();
+
+            if (GetEnableAnimation(this))
+            {
+                LayoutRoot.Opacity = 0;
+                xProjection.RotationX = 90;
+            }
+
+            // Check if review/feedback notification should be shown.
+            if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
+            {
+                SetVisibility(true);
+                SetupFirstMessage();
+
+                if (GetEnableAnimation(this))
+                {
+                    showContent.Begin();
+                }
+            }
+            else if (FeedbackHelper.Default.State == FeedbackState.SecondReview)
+            {
+                SetVisibility(true);
+                SetupSecondMessage();
+
+                if (GetEnableAnimation(this))
+                {
+                    showContent.Begin();
+                }
+            }
+            else
+            {
+                SetVisibility(false);
+                FeedbackHelper.Default.State = FeedbackState.Inactive;
+            }
+
+            foreach (var doubleAnimation in showContent.Children.OfType<DoubleAnimation>())
+                doubleAnimation.Duration = GetAnimationDuration(this);
+
+            foreach (var doubleAnimation in hideContent.Children.OfType<DoubleAnimation>())
+                doubleAnimation.Duration = GetAnimationDuration(this);
+        }
+
+        /// <summary>
+        /// Detect back key presses.
+        /// </summary>
+        private void AttachBackKeyPressed()
+        {
+            Windows.Phone.UI.Input.HardwareButtons.BackPressed += FeedbackOverlay_BackKeyPress;
+        }
+
+        /// <summary>
+        /// Handle back key presses.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FeedbackOverlay_BackKeyPress(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
+        {
+            // If back is pressed whilst notification is open, close 
+            // the notification and cancel back to stop app from exiting.
+            if (Visibility == Visibility.Visible)
+            {
+                OnNoClick();
+                e.Handled = true;		
+            }
+        }
+
+        /// <summary>
+        /// Set up first review message shown after FirstCount launches.
+        /// </summary>
+        private void SetupFirstMessage()
+        {
+            Title = string.Format(GetRatingTitle(this), GetApplicationName());
+            Message = GetRatingMessage1(this);
+            YesText = GetRatingYes(this);
+            NoText = GetRatingNo(this);
+        }
+
+        /// <summary>
+        /// Set up second review message shown after SecondCount launches.
+        /// </summary>
+        private void SetupSecondMessage()
+        {
+            Title = string.Format(GetRatingTitle(this), GetApplicationName());
+            Message = GetRatingMessage2(this);
+            YesText = GetRatingYes(this);
+            NoText = GetRatingNo(this);
+        }
+
+        /// <summary>
+        /// Set up feedback message shown after first review message.
+        /// </summary>
+        private void SetupFeedbackMessage()
+        {
+            Title = GetFeedbackTitle(this);
+            Message = string.Format(GetFeedbackMessage1(this), GetApplicationName());
+            YesText = GetFeedbackYes(this);
+            NoText = GetFeedbackNo(this);
+        }
+
+        /// <summary>
+        /// Called when no button is pressed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void noButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnNoClick();
+        }
+
+        /// <summary>
+        /// Handle no button presses.
+        /// </summary>
+        private void OnNoClick()
+        {
+            if (GetEnableAnimation(this))
+            {
+                hideContent.Begin();
+            }
+            else
+            {
+                ShowFeedback();
+            }
+        }
+
+        /// <summary>
+        /// Called when notification gets hidden.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void hideContent_Completed(object sender, object e)
+        {
+            ShowFeedback();
+        }
+
+        /// <summary>
+        /// Show feedback message.
+        /// </summary>
+        private void ShowFeedback()
+        {
+            // Feedback message is shown only after first review message.
+            if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
+            {
+                SetupFeedbackMessage();
+                FeedbackHelper.Default.State = FeedbackState.Feedback;
+
+                if (GetEnableAnimation(this))
+                {
+                    showContent.Begin();
+                }
+            }
+            else
+            {
+                SetVisibility(false);
+                FeedbackHelper.Default.State = FeedbackState.Inactive;
+            }
+        }
+
+        /// <summary>
+        /// Called when yes button is pressed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void yesButton_Click(object sender, RoutedEventArgs e)
+        {
+            SetVisibility(false);
+
+            if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
+            {
+                Review();
+            }
+            else if (FeedbackHelper.Default.State == FeedbackState.SecondReview)
+            {
+                Review();
+            }
+            else if (FeedbackHelper.Default.State == FeedbackState.Feedback)
+            {
+                Feedback();
+            }
+            FeedbackHelper.Default.State = FeedbackState.Inactive;
+        }
+
+        /// <summary>
+        /// Launch market place review.
+        /// </summary>
+        private void Review()
+        {
+            FeedbackHelper.Default.Review();
+
+            //var marketplace = new MarketplaceReviewTask();
+            //marketplace.Show();
+        }
+
+        /// <summary>
+        /// Launch feedback email.
+        /// </summary>
+        private async void Feedback()
+        {
+            string version = string.Empty;
+            var uri = new Uri("ms-appx:///AppxManifest.xml");
+            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(uri);
+            using (var rastream = await file.OpenReadAsync())
+            using (var appManifestStream = rastream.AsStreamForRead())
+            {
+                using (var reader = XmlReader.Create(appManifestStream, new XmlReaderSettings { IgnoreWhitespace = true, IgnoreComments = true }))
+                {
+                    var doc = XDocument.Load(reader);
+                    var app = doc.Descendants("Identity").FirstOrDefault();
+                    var versionAttribute = app?.Attribute("Version");
+                    if (versionAttribute != null)
+                    {
+                        version = versionAttribute.Value;
+                    }
+                }
+            }
+
+            string company = GetCompanyName(this);
+            if (company == null || company.Length <= 0)
+            {
+                company = "<Company>";
+            }
+
+            var easClientDeviceInformation = new EasClientDeviceInformation();
+
+            // Body text including hardware, firmware and software info
+            string body = string.Format(GetFeedbackBody(this),
+                 easClientDeviceInformation.SystemProductName,
+                 easClientDeviceInformation.SystemManufacturer,
+                 easClientDeviceInformation.SystemFirmwareVersion,
+                 easClientDeviceInformation.SystemHardwareVersion,
+                 version,
+                 company);
+
+            // Send an Email with attachment
+            EmailMessage email = new EmailMessage();
+            email.To.Add(new EmailRecipient(GetFeedbackTo(this)));
+            email.Subject = string.Format(GetFeedbackSubject(this), GetApplicationName());
+            email.Body = body;
+            await EmailManager.ShowComposeNewEmailAsync(email);		
+        }
+
+        /// <summary>
+        /// Set review/feedback notification visibility.
+        /// </summary>
+        /// <param name="visible">True to set visible, otherwise False.</param>
+        private void SetVisibility(bool visible)
+        {
+            bool wasVisible = GetIsVisible(this);
+
+            if (visible)
+            {
+                PreparePanoramaPivot(false);
+                SetIsVisible(this, true);
+                SetIsNotVisible(this, false);
+                Visibility = Visibility.Visible;
+            }
+            else
+            {
+                PreparePanoramaPivot(true);
+                SetIsVisible(this, false);
+                SetIsNotVisible(this, true);
+                Visibility = Visibility.Collapsed;
+            }
+
+            if (wasVisible != visible)
+            {
+                OnVisibilityChanged();
+            }
+        }
+
+        /// <summary>
+        /// Called when visibility changes.
+        /// </summary>
+        private void OnVisibilityChanged()
+        {
+            VisibilityChanged?.Invoke(this, new EventArgs());
+        }
+
+        /// <summary>
+        /// Prepare underlaying Pivot and Panorama controls if such exist.
+        /// 
+        /// Pivot and Panorama capture touch gestures and remain active even
+        /// when overlaid with a UserControl. When FeedbackOverlay is shown,
+        /// touch events for pivot and panorama controls are disabled, and
+        /// they are enabled again after FeedbackOverlay is hidden.
+        /// </summary>
+        /// <param name="hitTestVisible">True to set visible, otherwise False.</param>
+        private void PreparePanoramaPivot(bool hitTestVisible)
+        {
+            DependencyObject o = VisualTreeHelper.GetParent(this);
+
+            int children = VisualTreeHelper.GetChildrenCount(o);
+            for (int i = 0; i < children; i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(o, i);
+                Type t = child.GetType();
+                if (t.FullName == "Microsoft.Phone.Controls.Panorama" ||
+                    t.FullName == "Microsoft.Phone.Controls.Pivot")
+                {
+                    UIElement elem = (UIElement)child;
+                    elem.IsHitTestVisible = hitTestVisible;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Override default assembly dependent localization for the control
+        /// with another culture supported by the application and the library.
+        /// </summary>
+        private void OverrideLanguage()
+        {
+            CultureInfo originalCulture = CultureInfo.DefaultThreadCurrentUICulture;
+            CultureInfo newCulture = new CultureInfo(GetLanguageOverride(this));
+
+            CultureInfo.DefaultThreadCurrentCulture = newCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = newCulture;
+
+            SetFeedbackBody(this, AppResources.FeedbackBody);
+            SetFeedbackMessage1(this, string.Format(AppResources.FeedbackMessage1, GetApplicationName()));
+            SetFeedbackNo(this, AppResources.FeedbackNo);
+            SetFeedbackSubject(this, string.Format(AppResources.FeedbackSubject, GetApplicationName()));
+            SetFeedbackTitle(this, AppResources.FeedbackTitle);
+            SetFeedbackYes(this, AppResources.FeedbackYes);
+            SetRatingMessage1(this, AppResources.RatingMessage1);
+            SetRatingMessage2(this, AppResources.RatingMessage2);
+            SetRatingNo(this, AppResources.RatingNo);
+            SetRatingTitle(this, string.Format(AppResources.RatingTitle, GetApplicationName()));
+            SetRatingYes(this, AppResources.RatingYes);
+
+            CultureInfo.DefaultThreadCurrentCulture = originalCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = originalCulture;	
+        }
+
+        /// <summary>
+        /// Get application name.
+        /// </summary>
+        /// <returns>Name of the application.</returns>
+        private string GetApplicationName()
+        {
+            string appName = GetApplicationName(this);
+
+            // If application name has not been defined by the application,
+            // extract it from the Application class.
+            if (appName == null || appName.Length <= 0)
+            {
+                appName = Application.Current.ToString();
+                if (appName.EndsWith(".App"))
+                {
+                    appName = appName.Remove(appName.LastIndexOf(".App"));
+                }
+            }
+
+            return appName;
         }
     }
 }

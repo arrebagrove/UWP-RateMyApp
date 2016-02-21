@@ -341,7 +341,11 @@
       <LastGenOutput>AppResources.zh-CN.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <SDKReference Include="WindowsMobile, Version=10.0.10586.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\FeedbackOverlay.xaml">
       <SubType>Designer</SubType>
