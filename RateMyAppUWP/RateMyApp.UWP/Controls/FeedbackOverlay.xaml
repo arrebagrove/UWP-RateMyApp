@@ -23,7 +23,7 @@
         </Storyboard>
     </UserControl.Resources>
 
-    <Grid x:Name="LayoutRoot" Margin="5" MaxWidth="440">
+    <Grid x:Name="LayoutRoot" Margin="5">
         <Border x:Name="content" VerticalAlignment="Top"
                 BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
                 BorderThickness="2"

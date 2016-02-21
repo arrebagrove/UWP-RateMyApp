@@ -8,16 +8,16 @@
     xmlns:controls="using:RateMyApp.UWP.Controls"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Canvas>
-        <!-- Feedback overlay -->
-        <controls:FeedbackOverlay x:Uid="RMA" x:Name="FeedbackOverlay"
-                                      Canvas.ZIndex="999"
+    <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Canvas ZIndex="1000">
+            <!-- Feedback overlay -->
+            <controls:FeedbackOverlay x:Uid="RMA" x:Name="FeedbackOverlay"
+                                      Width="{Binding ElementName=LayoutRoot, Path=Width}"
                               FeedbackTo="Edi.Wang@outlook.com"
                               ApplicationName="Another Funcking App"
                               CompanyName="Superhard"
                               />
-        <!--
+            <!--
         <rma:FeedbackOverlay x:Uid="RMA" x:Name="FeedbackOverlay"
                               Grid.RowSpan="2"
                               FeedbackTo="_Feedback_to"
@@ -25,7 +25,7 @@
                               CompanyName="_Company"
                               AnimationDuration="0:0:2.5" Background="#FF41DB31" Foreground="#FFB72323"
                               /> -->
-
+        </Canvas>
         <StackPanel>
             <TextBlock Text="Some content" />
             <TextBlock Text="Some content" />
@@ -42,6 +42,6 @@
             <TextBlock Text="Some content" />
             <TextBlock Text="Some content" />
         </StackPanel>
-        </Canvas>
+
     </Grid>
 </Page>
