@@ -107,6 +107,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\FeedbackOverlay.xaml.cs">
+      <DependentUpon>FeedbackOverlay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\FeedbackHelper.cs" />
     <Compile Include="Helpers\StorageHelper.cs" />
     <Compile Include="LocalizedStrings.cs" />
@@ -338,8 +341,12 @@
       <LastGenOutput>AppResources.zh-CN.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Controls\" />
+    <Page Include="Controls\FeedbackOverlay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
