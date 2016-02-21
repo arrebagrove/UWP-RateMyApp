@@ -5,9 +5,23 @@
     xmlns:local="using:RateMyApp.UWP.TestApp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:RateMyApp.UWP.Controls"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <!-- Feedback overlay -->
+        <controls:FeedbackOverlay x:Uid="RMA" x:Name="FeedbackOverlay"
+                              FeedbackTo="Edi.Wang@outlook.com"
+                              ApplicationName="Another Funcking App"
+                              CompanyName="Superhard"
+                              />
+        <!--
+        <rma:FeedbackOverlay x:Uid="RMA" x:Name="FeedbackOverlay"
+                              Grid.RowSpan="2"
+                              FeedbackTo="_Feedback_to"
+                              ApplicationName="_App_name"
+                              CompanyName="_Company"
+                              AnimationDuration="0:0:2.5" Background="#FF41DB31" Foreground="#FFB72323"
+                              /> -->
     </Grid>
 </Page>

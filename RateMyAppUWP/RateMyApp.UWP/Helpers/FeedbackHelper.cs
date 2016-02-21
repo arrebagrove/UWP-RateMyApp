@@ -132,13 +132,16 @@ namespace RateMyApp.UWP.Helpers
         /// </summary>
         public void Launching()
         {
-
-            var license = Windows.ApplicationModel.Store.CurrentApp.LicenseInformation;
+            // this will blow up on UWP:
+            // https://social.msdn.microsoft.com/Forums/sqlserver/en-US/c9653f06-0d48-498f-9b3e-335435780fd4/cw81windows-81-app-license-error-0x803f6107?forum=wpdevelop
+            // http://stackoverflow.com/questions/34364580/wp8-1-and-wp10-differences
+            // var license = Windows.ApplicationModel.Store.CurrentApp.LicenseInformation;
 
             // Only load state if app is not trial, app is not activated after
             // being tombstoned, and state has not been loaded before.
-            if (!license.IsTrial &&
-                State == FeedbackState.Active)
+            //if (!license.IsTrial &&
+            //    State == FeedbackState.Active)
+            if (State == FeedbackState.Active)
             {
                 LoadState();
             }
@@ -215,11 +218,8 @@ namespace RateMyApp.UWP.Helpers
             {
                 StorageHelper.StoreSetting(LaunchCountKey, LaunchCount, true);
                 StorageHelper.StoreSetting(ReviewedKey, reviewed, true);
-#if SILVERLIGHT
-                StorageHelper.StoreSetting(LastLaunchDateKey, lastLaunchDate, true);
-#else
-                StorageHelper.StoreSetting(LastLaunchDateKey, lastLaunchDate.ToBinary(), true);
-#endif				
+
+                StorageHelper.StoreSetting(LastLaunchDateKey, lastLaunchDate.ToBinary(), true);	
                 StorageHelper.FlushToStorage();
             }
             catch (Exception ex)
