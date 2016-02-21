@@ -9,8 +9,10 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Canvas>
         <!-- Feedback overlay -->
         <controls:FeedbackOverlay x:Uid="RMA" x:Name="FeedbackOverlay"
+                                      Canvas.ZIndex="999"
                               FeedbackTo="Edi.Wang@outlook.com"
                               ApplicationName="Another Funcking App"
                               CompanyName="Superhard"
@@ -23,5 +25,23 @@
                               CompanyName="_Company"
                               AnimationDuration="0:0:2.5" Background="#FF41DB31" Foreground="#FFB72323"
                               /> -->
+
+        <StackPanel>
+            <TextBlock Text="Some content" />
+            <TextBlock Text="Some content" />
+            <TextBlock Text="Some content" />
+            <TextBlock Text="Some content" />
+            <TextBlock Text="Some content" />
+            <TextBlock Text="Some content" />
+            <TextBlock Text="Some content" />
+            <TextBlock Text="Some content" />
+            <TextBlock Text="Some content" />
+            <Button HorizontalAlignment="Stretch" Content="Some Button" />
+            <TextBlock Text="Some content" />
+            <TextBlock Text="Some content" />
+            <TextBlock Text="Some content" />
+            <TextBlock Text="Some content" />
+        </StackPanel>
+        </Canvas>
     </Grid>
 </Page>

@@ -23,10 +23,11 @@
         </Storyboard>
     </UserControl.Resources>
 
-    <Grid x:Name="LayoutRoot" Margin="5">
+    <Grid x:Name="LayoutRoot" Margin="5" MaxWidth="440">
         <Border x:Name="content" VerticalAlignment="Top"
                 BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
                 BorderThickness="2"
+                HorizontalAlignment="Center"
                 Background="{ThemeResource AppBarBackgroundThemeBrush}">
             <Grid Margin="10">
                 <Grid.RowDefinitions>
