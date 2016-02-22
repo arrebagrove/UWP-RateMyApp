@@ -161,7 +161,7 @@
     <value>谢了，不用。</value>
   </data>
   <data name="RatingTitle" xml:space="preserve">
-    <value>是否{0}受用？</value>
+    <value>是否觉得{0}受用？</value>
   </data>
   <data name="RatingYes" xml:space="preserve">
     <value>给个五星吧</value>
