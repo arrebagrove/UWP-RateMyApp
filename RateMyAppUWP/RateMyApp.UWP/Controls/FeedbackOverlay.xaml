@@ -13,9 +13,7 @@
     <Grid x:Name="LayoutRoot">
         <ContentDialog x:Name="DigContent" 
                        PrimaryButtonText="Donec suscipit" 
-                       SecondaryButtonText="Nulla nec"
-                       PrimaryButtonClick="Content_OnPrimaryButtonClick"
-                       SecondaryButtonClick="Content_OnSecondaryButtonClick">
+                       SecondaryButtonText="Nulla nec">
             <ContentDialog.Title>
                 <TextBlock x:Name="TxtTitle" Text="Lorem ipsum dolor sit amet?" />
             </ContentDialog.Title>

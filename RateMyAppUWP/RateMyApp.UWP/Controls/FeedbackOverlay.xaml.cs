@@ -483,13 +483,14 @@ namespace RateMyApp.UWP.Controls
             if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
             {
                 SetupFirstMessage();
-                await DigContent.ShowAsync();
-
+                ContentDialogResult result = await DigContent.ShowAsync();
+                await HandleDialogResult(result);
             }
             else if (FeedbackHelper.Default.State == FeedbackState.SecondReview)
             {
                 SetupSecondMessage();
-                await DigContent.ShowAsync();
+                ContentDialogResult result = await DigContent.ShowAsync();
+                await HandleDialogResult(result);
             }
             else
             {
@@ -636,35 +637,50 @@ namespace RateMyApp.UWP.Controls
             return appName;
         }
 
-        private async void Content_OnPrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async Task HandleDialogResult(ContentDialogResult result)
         {
-            if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
+            if (result == ContentDialogResult.Primary)
             {
-                await OpenStoreReviewAsync();
-            }
-            else if (FeedbackHelper.Default.State == FeedbackState.SecondReview)
-            {
-                await OpenStoreReviewAsync();
-            }
-            else if (FeedbackHelper.Default.State == FeedbackState.Feedback)
-            {
-                await LaunchFeedbackEmailAsync();
-            }
-            FeedbackHelper.Default.State = FeedbackState.Inactive;
-        }
-
-        private void Content_OnSecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            // LaunchFeedbackEmailAsync TxtMessage is shown only after first review TxtMessage.
-            if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
-            {
-                SetupFeedbackMessage();
-                FeedbackHelper.Default.State = FeedbackState.Feedback;
-            }
-            else
-            {
+                if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
+                {
+                    await OpenStoreReviewAsync();
+                }
+                else if (FeedbackHelper.Default.State == FeedbackState.SecondReview)
+                {
+                    await OpenStoreReviewAsync();
+                }
+                else if (FeedbackHelper.Default.State == FeedbackState.Feedback)
+                {
+                    await LaunchFeedbackEmailAsync();
+                }
                 FeedbackHelper.Default.State = FeedbackState.Inactive;
             }
+
+            if (result == ContentDialogResult.Secondary)
+            {
+                DigContent.Hide();
+                // LaunchFeedbackEmailAsync TxtMessage is shown only after first review TxtMessage.
+                if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
+                {
+                    SetupFeedbackMessage();
+                    FeedbackHelper.Default.State = FeedbackState.Feedback;
+                    await DigContent.ShowAsync();
+                }
+                else
+                {
+                    FeedbackHelper.Default.State = FeedbackState.Inactive;
+                }
+            }
         }
+
+        //private async void Content_OnPrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        //{
+            
+        //}
+
+        //private async void Content_OnSecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        //{
+            
+        //}
     }
 }
