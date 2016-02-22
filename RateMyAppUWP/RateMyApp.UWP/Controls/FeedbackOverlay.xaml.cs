@@ -479,9 +479,6 @@ namespace RateMyApp.UWP.Controls
             // Inform FeedbackHelper of the creation of this control.
             FeedbackHelper.Default.Launching();
 
-            // This class needs to be aware of Back key presses.
-            AttachBackKeyPressed();
-
             // Check if review/feedback notification should be shown.
             if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
             {
@@ -498,33 +495,6 @@ namespace RateMyApp.UWP.Controls
             {
                 await SetVisibility(false);
                 FeedbackHelper.Default.State = FeedbackState.Inactive;
-            }
-        }
-
-        /// <summary>
-        /// Detect back key presses.
-        /// </summary>
-        private void AttachBackKeyPressed()
-        {
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
-            {
-                Windows.Phone.UI.Input.HardwareButtons.BackPressed += FeedbackOverlay_BackKeyPress;
-            }
-        }
-
-        /// <summary>
-        /// Handle back key presses.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void FeedbackOverlay_BackKeyPress(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
-        {
-            // If back is pressed whilst notification is open, close 
-            // the notification and cancel back to stop app from exiting.
-            if (Visibility == Visibility.Visible)
-            {
-                OnNoClick();
-                e.Handled = true;
             }
         }
 
@@ -564,25 +534,15 @@ namespace RateMyApp.UWP.Controls
         /// <summary>
         /// Handle no button presses.
         /// </summary>
-        private void OnNoClick()
+        private async Task OnNoClick()
         {
-            ShowFeedback();
-        }
-
-        /// <summary>
-        /// Called when notification gets hidden.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void hideContent_Completed(object sender, object e)
-        {
-            ShowFeedback();
+            await ShowFeedback();
         }
 
         /// <summary>
         /// Show feedback message.
         /// </summary>
-        private void ShowFeedback()
+        private async Task ShowFeedback()
         {
             // Feedback message is shown only after first review message.
             if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
@@ -592,7 +552,7 @@ namespace RateMyApp.UWP.Controls
             }
             else
             {
-                SetVisibility(false);
+                await SetVisibility(false);
                 FeedbackHelper.Default.State = FeedbackState.Inactive;
             }
         }
@@ -603,9 +563,6 @@ namespace RateMyApp.UWP.Controls
         private void Review()
         {
             FeedbackHelper.Default.Review();
-
-            //var marketplace = new MarketplaceReviewTask();
-            //marketplace.Show();
         }
 
         /// <summary>
@@ -740,9 +697,9 @@ namespace RateMyApp.UWP.Controls
             FeedbackHelper.Default.State = FeedbackState.Inactive;
         }
 
-        private void Content_OnSecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void Content_OnSecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            OnNoClick();
+            await OnNoClick();
         }
     }
 }
