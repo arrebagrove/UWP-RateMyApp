@@ -12,7 +12,6 @@ using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Security.ExchangeActiveSyncProvisioning;
-using RateMyApp.UWP.Resources;
 using Colors = Windows.UI.Colors;
 
 namespace RateMyApp.UWP.Controls
@@ -30,7 +29,7 @@ namespace RateMyApp.UWP.Controls
         public static readonly DependencyProperty RatingTitleProperty =
             DependencyProperty.Register(
                 "RatingTitle", typeof(string), typeof(FeedbackOverlay),
-                new PropertyMetadata(AppResources.RatingTitle, null));
+                new PropertyMetadata(ResHelper.GetResource("RatingTitle"), null));
 
         public static void SetRatingTitle(FeedbackOverlay element, string value)
         {
@@ -50,7 +49,7 @@ namespace RateMyApp.UWP.Controls
         public static readonly DependencyProperty RatingMessage1Property =
             DependencyProperty.Register(
                 "RatingMessage1", typeof(string), typeof(FeedbackOverlay),
-                new PropertyMetadata(AppResources.RatingMessage1, null));
+                new PropertyMetadata(ResHelper.GetResource("RatingMessage1"), null));
 
         public static void SetRatingMessage1(FeedbackOverlay element, string value)
         {
@@ -70,7 +69,7 @@ namespace RateMyApp.UWP.Controls
         public static readonly DependencyProperty RatingMessage2Property =
             DependencyProperty.Register(
                 "RatingMessage2", typeof(string), typeof(FeedbackOverlay),
-                new PropertyMetadata(AppResources.RatingMessage2, null));
+                new PropertyMetadata(ResHelper.GetResource("RatingMessage2"), null));
 
         public static void SetRatingMessage2(FeedbackOverlay element, string value)
         {
@@ -90,7 +89,7 @@ namespace RateMyApp.UWP.Controls
         public static readonly DependencyProperty RatingYesProperty =
             DependencyProperty.Register(
                 "RatingYes", typeof(string), typeof(FeedbackOverlay),
-                new PropertyMetadata(AppResources.RatingYes, null));
+                new PropertyMetadata(ResHelper.GetResource("RatingYes"), null));
 
         public static void SetRatingYes(FeedbackOverlay element, string value)
         {
@@ -110,7 +109,7 @@ namespace RateMyApp.UWP.Controls
         public static readonly DependencyProperty RatingNoProperty =
             DependencyProperty.Register(
                 "RatingNo", typeof(string), typeof(FeedbackOverlay),
-                new PropertyMetadata(AppResources.RatingNo, null));
+                new PropertyMetadata(ResHelper.GetResource("RatingNo"), null));
 
         public static void SetRatingNo(FeedbackOverlay element, string value)
         {
@@ -130,7 +129,7 @@ namespace RateMyApp.UWP.Controls
         public static readonly DependencyProperty FeedbackTitleProperty =
             DependencyProperty.Register(
                 "FeedbackTitle", typeof(string), typeof(FeedbackOverlay),
-                new PropertyMetadata(AppResources.FeedbackTitle, null));
+                new PropertyMetadata(ResHelper.GetResource("FeedbackTitle"), null));
 
         public static void SetFeedbackTitle(FeedbackOverlay element, string value)
         {
@@ -150,7 +149,7 @@ namespace RateMyApp.UWP.Controls
         public static readonly DependencyProperty FeedbackMessage1Property =
             DependencyProperty.Register(
                 "FeedbackMessage1", typeof(string), typeof(FeedbackOverlay),
-                new PropertyMetadata(AppResources.FeedbackMessage1, null));
+                new PropertyMetadata(ResHelper.GetResource("FeedbackMessage1"), null));
 
         public static void SetFeedbackMessage1(FeedbackOverlay element, string value)
         {
@@ -170,7 +169,7 @@ namespace RateMyApp.UWP.Controls
         public static readonly DependencyProperty FeedbackYesProperty =
             DependencyProperty.Register(
                 "FeedbackYes", typeof(string), typeof(FeedbackOverlay),
-                new PropertyMetadata(AppResources.FeedbackYes, null));
+                new PropertyMetadata(ResHelper.GetResource("FeedbackYes"), null));
 
         public static void SetFeedbackYes(FeedbackOverlay element, string value)
         {
@@ -190,7 +189,7 @@ namespace RateMyApp.UWP.Controls
         public static readonly DependencyProperty FeedbackNoProperty =
             DependencyProperty.Register(
                 "FeedbackNo", typeof(string), typeof(FeedbackOverlay),
-                new PropertyMetadata(AppResources.FeedbackNo, null));
+                new PropertyMetadata(ResHelper.GetResource("FeedbackNo"), null));
 
         public static void SetFeedbackNo(FeedbackOverlay element, string value)
         {
@@ -230,7 +229,7 @@ namespace RateMyApp.UWP.Controls
         public static readonly DependencyProperty FeedbackSubjectProperty =
             DependencyProperty.Register(
                 "FeedbackSubject", typeof(string), typeof(FeedbackOverlay),
-                new PropertyMetadata(AppResources.FeedbackSubject, null));
+                new PropertyMetadata(ResHelper.GetResource("FeedbackSubject"), null));
 
         public static void SetFeedbackSubject(FeedbackOverlay element, string value)
         {
@@ -250,7 +249,7 @@ namespace RateMyApp.UWP.Controls
         public static readonly DependencyProperty FeedbackBodyProperty =
             DependencyProperty.Register(
                 "FeedbackBody", typeof(string), typeof(FeedbackOverlay),
-                new PropertyMetadata(AppResources.FeedbackBody, null));
+                new PropertyMetadata(ResHelper.GetResource("FeedbackBody"), null));
 
         public static void SetFeedbackBody(FeedbackOverlay element, string value)
         {
@@ -599,17 +598,17 @@ namespace RateMyApp.UWP.Controls
             CultureInfo.DefaultThreadCurrentCulture = newCulture;
             CultureInfo.DefaultThreadCurrentUICulture = newCulture;
 
-            SetFeedbackBody(this, AppResources.FeedbackBody);
-            SetFeedbackMessage1(this, string.Format(AppResources.FeedbackMessage1, GetApplicationName()));
-            SetFeedbackNo(this, AppResources.FeedbackNo);
-            SetFeedbackSubject(this, string.Format(AppResources.FeedbackSubject, GetApplicationName()));
-            SetFeedbackTitle(this, AppResources.FeedbackTitle);
-            SetFeedbackYes(this, AppResources.FeedbackYes);
-            SetRatingMessage1(this, AppResources.RatingMessage1);
-            SetRatingMessage2(this, AppResources.RatingMessage2);
-            SetRatingNo(this, AppResources.RatingNo);
-            SetRatingTitle(this, string.Format(AppResources.RatingTitle, GetApplicationName()));
-            SetRatingYes(this, AppResources.RatingYes);
+            SetFeedbackBody(this, ResHelper.GetResource("FeedbackBody"));
+            SetFeedbackMessage1(this, string.Format(ResHelper.GetResource("FeedbackMessage1"), GetApplicationName()));
+            SetFeedbackNo(this, ResHelper.GetResource("FeedbackNo"));
+            SetFeedbackSubject(this, string.Format(ResHelper.GetResource("FeedbackSubject"), GetApplicationName()));
+            SetFeedbackTitle(this, ResHelper.GetResource("FeedbackTitle"));
+            SetFeedbackYes(this, ResHelper.GetResource("FeedbackYes"));
+            SetRatingMessage1(this, ResHelper.GetResource("RatingMessage1"));
+            SetRatingMessage2(this, ResHelper.GetResource("RatingMessage2"));
+            SetRatingNo(this, ResHelper.GetResource("RatingNo"));
+            SetRatingTitle(this, string.Format(ResHelper.GetResource("RatingTitle"), GetApplicationName()));
+            SetRatingYes(this, ResHelper.GetResource("RatingYes"));
 
             CultureInfo.DefaultThreadCurrentCulture = originalCulture;
             CultureInfo.DefaultThreadCurrentUICulture = originalCulture;

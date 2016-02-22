@@ -20,7 +20,8 @@
 
             <ContentDialog.Content>
                 <TextBlock x:Name="TxtMessage" 
-                           TextWrapping="Wrap" 
+                           TextWrapping="Wrap"
+                           x:Uid="TxtMessage"
                            Text="Nulla consectetur sem a sodales sodales. Fusce ac risus molestie est venenatis gravida vitae a ipsum." />
             </ContentDialog.Content>
         </ContentDialog>
