@@ -483,17 +483,16 @@ namespace RateMyApp.UWP.Controls
             if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
             {
                 SetupFirstMessage();
-                await SetVisibility(true);
-                
+                await content.ShowAsync();
+
             }
             else if (FeedbackHelper.Default.State == FeedbackState.SecondReview)
             {
                 SetupSecondMessage();
-                await SetVisibility(true);
+                await content.ShowAsync();
             }
             else
             {
-                await SetVisibility(false);
                 FeedbackHelper.Default.State = FeedbackState.Inactive;
             }
         }
@@ -529,32 +528,6 @@ namespace RateMyApp.UWP.Controls
             Message = string.Format(GetFeedbackMessage1(this), GetApplicationName());
             YesText = GetFeedbackYes(this);
             NoText = GetFeedbackNo(this);
-        }
-
-        /// <summary>
-        /// Handle no button presses.
-        /// </summary>
-        private async Task OnNoClick()
-        {
-            await ShowFeedback();
-        }
-
-        /// <summary>
-        /// Show feedback message.
-        /// </summary>
-        private async Task ShowFeedback()
-        {
-            // LaunchFeedbackEmailAsync message is shown only after first review message.
-            if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
-            {
-                SetupFeedbackMessage();
-                FeedbackHelper.Default.State = FeedbackState.Feedback;
-            }
-            else
-            {
-                await SetVisibility(false);
-                FeedbackHelper.Default.State = FeedbackState.Inactive;
-            }
         }
 
         /// <summary>
@@ -614,21 +587,6 @@ namespace RateMyApp.UWP.Controls
         }
 
         /// <summary>
-        /// Set review/feedback notification visibility.
-        /// </summary>
-        /// <param name="visible">True to set visible, otherwise False.</param>
-        private async Task SetVisibility(bool visible)
-        {
-            if (visible)
-            {
-                await content.ShowAsync();
-            }
-            else
-            {
-            }
-        }
-
-        /// <summary>
         /// Override default assembly dependent localization for the control
         /// with another culture supported by the application and the library.
         /// </summary>
@@ -680,8 +638,6 @@ namespace RateMyApp.UWP.Controls
 
         private async void Content_OnPrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            await SetVisibility(false);
-
             if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
             {
                 await OpenStoreReviewAsync();
@@ -692,14 +648,23 @@ namespace RateMyApp.UWP.Controls
             }
             else if (FeedbackHelper.Default.State == FeedbackState.Feedback)
             {
-                LaunchFeedbackEmailAsync();
+                await LaunchFeedbackEmailAsync();
             }
             FeedbackHelper.Default.State = FeedbackState.Inactive;
         }
 
-        private async void Content_OnSecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void Content_OnSecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            await OnNoClick();
+            // LaunchFeedbackEmailAsync message is shown only after first review message.
+            if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
+            {
+                SetupFeedbackMessage();
+                FeedbackHelper.Default.State = FeedbackState.Feedback;
+            }
+            else
+            {
+                FeedbackHelper.Default.State = FeedbackState.Inactive;
+            }
         }
     }
 }
