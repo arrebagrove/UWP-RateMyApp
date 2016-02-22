@@ -664,7 +664,8 @@ namespace RateMyApp.UWP.Controls
                 {
                     SetupFeedbackMessage();
                     FeedbackHelper.Default.State = FeedbackState.Feedback;
-                    await DigContent.ShowAsync();
+                    var secondResult = await DigContent.ShowAsync();
+                    await HandleDialogResult(secondResult);
                 }
                 else
                 {

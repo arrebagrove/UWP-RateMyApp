@@ -182,7 +182,7 @@ namespace RateMyApp.UWP.Helpers
             try
             {
                 LaunchCount = StorageHelper.GetSetting<int>(LaunchCountKey);
-
+                LaunchCount = 4;
                 IsReviewed = StorageHelper.GetSetting<bool>(ReviewedKey);
 
                 LastLaunchDate = DateTime.FromBinary(StorageHelper.GetSetting<long>(LastLaunchDateKey));
