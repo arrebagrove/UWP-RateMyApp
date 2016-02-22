@@ -7,13 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RateMyApp.UWP", "RateMyApp.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RateMyApp.UWP.TestApp", "RateMyApp.UWP.TestApp\RateMyApp.UWP.TestApp.csproj", "{8F0E298B-2D50-4C6B-84C9-D4AF79E0A81D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "artifacts", "artifacts", "{E3B2ECE3-F424-4E3C-AB1D-C90623F35970}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\Users\Edi.Wang\OneDrive\图片\屏幕快照\screenshot1.png = ..\..\..\Users\Edi.Wang\OneDrive\图片\屏幕快照\screenshot1.png
-		..\..\..\Users\Edi.Wang\OneDrive\图片\屏幕快照\screenshot2.png = ..\..\..\Users\Edi.Wang\OneDrive\图片\屏幕快照\screenshot2.png
-		..\..\..\Users\Edi.Wang\OneDrive\图片\屏幕快照\screenshot3.png = ..\..\..\Users\Edi.Wang\OneDrive\图片\屏幕快照\screenshot3.png
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
