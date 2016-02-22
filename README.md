@@ -92,5 +92,4 @@ Tested Device
 
 Known Issues
 ------------
-- App will crash on ARM devices (Windows Phones) with exception:
-Unable to load resources for resource file "RateMyApp.UWP.Resources.AppResources" in package "8daa1574-b9ed-4b3c-94a9-71240c0da98a".
+- App version is missing in Email content 
