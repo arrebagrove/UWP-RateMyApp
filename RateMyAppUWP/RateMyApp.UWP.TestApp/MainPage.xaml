@@ -9,23 +9,15 @@
     mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Canvas ZIndex="1000">
-            <!-- Feedback overlay -->
-            <controls:FeedbackOverlay x:Uid="RMA" x:Name="FeedbackOverlay"
+
+        <!-- Feedback overlay -->
+        <controls:FeedbackOverlay x:Uid="RMA" x:Name="FeedbackOverlay"
                                       Width="{Binding ElementName=LayoutRoot, Path=Width}"
                               FeedbackTo="Edi.Wang@outlook.com"
                               ApplicationName="Another Funcking App"
                               CompanyName="Superhard"
                               />
-            <!--
-        <rma:FeedbackOverlay x:Uid="RMA" x:Name="FeedbackOverlay"
-                              Grid.RowSpan="2"
-                              FeedbackTo="_Feedback_to"
-                              ApplicationName="_App_name"
-                              CompanyName="_Company"
-                              AnimationDuration="0:0:2.5" Background="#FF41DB31" Foreground="#FFB72323"
-                              /> -->
-        </Canvas>
+
         <StackPanel>
             <TextBlock Text="Some content" />
             <TextBlock Text="Some content" />

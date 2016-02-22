@@ -9,10 +9,10 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Windows.ApplicationModel.Email;
 using System.IO;
+using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Security.ExchangeActiveSyncProvisioning;
 using RateMyApp.UWP.Resources;
-using DoubleAnimation = Windows.UI.Xaml.Media.Animation.DoubleAnimation;
 using Colors = Windows.UI.Colors;
 
 namespace RateMyApp.UWP.Controls
@@ -520,9 +520,9 @@ namespace RateMyApp.UWP.Controls
         {
             set
             {
-                if ((string)noButton.Content != value)
+                if (content.SecondaryButtonText != value)
                 {
-                    noButton.Content = value;
+                    content.SecondaryButtonText = value;
                 }
             }
         }
@@ -532,9 +532,9 @@ namespace RateMyApp.UWP.Controls
         {
             set
             {
-                if ((string)yesButton.Content != value)
+                if (content.PrimaryButtonText != value)
                 {
-                    yesButton.Content = value;
+                    content.PrimaryButtonText = value;
                 }
             }
         }
@@ -542,11 +542,7 @@ namespace RateMyApp.UWP.Controls
         public FeedbackOverlay()
         {
             InitializeComponent();
-
-            yesButton.Click += yesButton_Click;
-            noButton.Click += noButton_Click;
             Loaded += FeedbackOverlay_Loaded;
-            hideContent.Completed += hideContent_Completed;
         }
 
         /// <summary>
@@ -564,24 +560,24 @@ namespace RateMyApp.UWP.Controls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void FeedbackOverlay_Loaded(object sender, RoutedEventArgs e)
+        private async void FeedbackOverlay_Loaded(object sender, RoutedEventArgs e)
         {
             // FeedbackTo property is mandatory and must be defined in xaml.
             if (GetFeedbackTo(this) == null || GetFeedbackTo(this).Length <= 0)
             {
-                throw new ArgumentNullException("FeedbackTo", "Mandatory property not defined in FeedbackOverlay.");
+                throw new ArgumentNullException(nameof(FeedbackToProperty), "Mandatory property not defined in FeedbackOverlay.");
             }
 
             // ApplicationName property is mandatory and must be defined in xaml.
             if (GetApplicationName(this) == null || GetApplicationName(this).Length <= 0)
             {
-                throw new ArgumentNullException("ApplicationName", "Mandatory property not defined in FeedbackOverlay.");
+                throw new ArgumentNullException(nameof(ApplicationNameProperty), "Mandatory property not defined in FeedbackOverlay.");
             }
 
             // CompanyName property is mandatory and must be defined in xaml.
             if (GetCompanyName(this) == null || GetCompanyName(this).Length <= 0)
             {
-                throw new ArgumentNullException("CompanyName", "Mandatory property not defined in FeedbackOverlay.");
+                throw new ArgumentNullException(nameof(CompanyNameProperty), "Mandatory property not defined in FeedbackOverlay.");
             }
 
             // Application language override.
@@ -601,44 +597,23 @@ namespace RateMyApp.UWP.Controls
             // This class needs to be aware of Back key presses.
             AttachBackKeyPressed();
 
-            if (GetEnableAnimation(this))
-            {
-                LayoutRoot.Opacity = 0;
-                xProjection.RotationX = 90;
-            }
-
             // Check if review/feedback notification should be shown.
             if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
             {
-                SetVisibility(true);
                 SetupFirstMessage();
-
-                if (GetEnableAnimation(this))
-                {
-                    showContent.Begin();
-                }
+                await SetVisibility(true);
+                
             }
             else if (FeedbackHelper.Default.State == FeedbackState.SecondReview)
             {
-                SetVisibility(true);
                 SetupSecondMessage();
-
-                if (GetEnableAnimation(this))
-                {
-                    showContent.Begin();
-                }
+                await SetVisibility(true);
             }
             else
             {
-                SetVisibility(false);
+                await SetVisibility(false);
                 FeedbackHelper.Default.State = FeedbackState.Inactive;
             }
-
-            foreach (var doubleAnimation in showContent.Children.OfType<DoubleAnimation>())
-                doubleAnimation.Duration = GetAnimationDuration(this);
-
-            foreach (var doubleAnimation in hideContent.Children.OfType<DoubleAnimation>())
-                doubleAnimation.Duration = GetAnimationDuration(this);
         }
 
         /// <summary>
@@ -664,7 +639,7 @@ namespace RateMyApp.UWP.Controls
             if (Visibility == Visibility.Visible)
             {
                 OnNoClick();
-                e.Handled = true;		
+                e.Handled = true;
             }
         }
 
@@ -702,28 +677,11 @@ namespace RateMyApp.UWP.Controls
         }
 
         /// <summary>
-        /// Called when no button is pressed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void noButton_Click(object sender, RoutedEventArgs e)
-        {
-            OnNoClick();
-        }
-
-        /// <summary>
         /// Handle no button presses.
         /// </summary>
         private void OnNoClick()
         {
-            if (GetEnableAnimation(this))
-            {
-                hideContent.Begin();
-            }
-            else
-            {
-                ShowFeedback();
-            }
+            ShowFeedback();
         }
 
         /// <summary>
@@ -746,41 +704,12 @@ namespace RateMyApp.UWP.Controls
             {
                 SetupFeedbackMessage();
                 FeedbackHelper.Default.State = FeedbackState.Feedback;
-
-                if (GetEnableAnimation(this))
-                {
-                    showContent.Begin();
-                }
             }
             else
             {
                 SetVisibility(false);
                 FeedbackHelper.Default.State = FeedbackState.Inactive;
             }
-        }
-
-        /// <summary>
-        /// Called when yes button is pressed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void yesButton_Click(object sender, RoutedEventArgs e)
-        {
-            SetVisibility(false);
-
-            if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
-            {
-                Review();
-            }
-            else if (FeedbackHelper.Default.State == FeedbackState.SecondReview)
-            {
-                Review();
-            }
-            else if (FeedbackHelper.Default.State == FeedbackState.Feedback)
-            {
-                Feedback();
-            }
-            FeedbackHelper.Default.State = FeedbackState.Inactive;
         }
 
         /// <summary>
@@ -839,27 +768,26 @@ namespace RateMyApp.UWP.Controls
             email.To.Add(new EmailRecipient(GetFeedbackTo(this)));
             email.Subject = string.Format(GetFeedbackSubject(this), GetApplicationName());
             email.Body = body;
-            await EmailManager.ShowComposeNewEmailAsync(email);		
+            await EmailManager.ShowComposeNewEmailAsync(email);
         }
 
         /// <summary>
         /// Set review/feedback notification visibility.
         /// </summary>
         /// <param name="visible">True to set visible, otherwise False.</param>
-        private void SetVisibility(bool visible)
+        private async Task SetVisibility(bool visible)
         {
             bool wasVisible = GetIsVisible(this);
 
             if (visible)
             {
-                PreparePanoramaPivot(false);
                 SetIsVisible(this, true);
                 SetIsNotVisible(this, false);
                 Visibility = Visibility.Visible;
+                await content.ShowAsync();
             }
             else
             {
-                PreparePanoramaPivot(true);
                 SetIsVisible(this, false);
                 SetIsNotVisible(this, true);
                 Visibility = Visibility.Collapsed;
@@ -877,33 +805,6 @@ namespace RateMyApp.UWP.Controls
         private void OnVisibilityChanged()
         {
             VisibilityChanged?.Invoke(this, new EventArgs());
-        }
-
-        /// <summary>
-        /// Prepare underlaying Pivot and Panorama controls if such exist.
-        /// 
-        /// Pivot and Panorama capture touch gestures and remain active even
-        /// when overlaid with a UserControl. When FeedbackOverlay is shown,
-        /// touch events for pivot and panorama controls are disabled, and
-        /// they are enabled again after FeedbackOverlay is hidden.
-        /// </summary>
-        /// <param name="hitTestVisible">True to set visible, otherwise False.</param>
-        private void PreparePanoramaPivot(bool hitTestVisible)
-        {
-            DependencyObject o = VisualTreeHelper.GetParent(this);
-
-            int children = VisualTreeHelper.GetChildrenCount(o);
-            for (int i = 0; i < children; i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(o, i);
-                Type t = child.GetType();
-                if (t.FullName == "Microsoft.Phone.Controls.Panorama" ||
-                    t.FullName == "Microsoft.Phone.Controls.Pivot")
-                {
-                    UIElement elem = (UIElement)child;
-                    elem.IsHitTestVisible = hitTestVisible;
-                }
-            }
         }
 
         /// <summary>
@@ -931,7 +832,7 @@ namespace RateMyApp.UWP.Controls
             SetRatingYes(this, AppResources.RatingYes);
 
             CultureInfo.DefaultThreadCurrentCulture = originalCulture;
-            CultureInfo.DefaultThreadCurrentUICulture = originalCulture;	
+            CultureInfo.DefaultThreadCurrentUICulture = originalCulture;
         }
 
         /// <summary>
@@ -954,6 +855,30 @@ namespace RateMyApp.UWP.Controls
             }
 
             return appName;
+        }
+
+        private async void Content_OnPrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            await SetVisibility(false);
+
+            if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
+            {
+                Review();
+            }
+            else if (FeedbackHelper.Default.State == FeedbackState.SecondReview)
+            {
+                Review();
+            }
+            else if (FeedbackHelper.Default.State == FeedbackState.Feedback)
+            {
+                Feedback();
+            }
+            FeedbackHelper.Default.State = FeedbackState.Inactive;
+        }
+
+        private void Content_OnSecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            OnNoClick();
         }
     }
 }

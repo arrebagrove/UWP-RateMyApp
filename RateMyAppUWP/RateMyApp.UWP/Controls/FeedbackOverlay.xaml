@@ -7,66 +7,24 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    FontSize="{StaticResource ContentControlFontSize}"
-    Visibility="{Binding VisibilityForDesign, RelativeSource={RelativeSource Self}}"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <UserControl.Resources>
-        <Storyboard x:Name="showContent">
-            <DoubleAnimation To="1" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="Opacity" />
-            <DoubleAnimation To="0" Storyboard.TargetName="xProjection" Storyboard.TargetProperty="RotationX" />
-        </Storyboard>
-        <Storyboard x:Name="hideContent">
-            <DoubleAnimation To="0" Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="Opacity" />
-            <DoubleAnimation To="90" Storyboard.TargetName="xProjection" Storyboard.TargetProperty="RotationX" />
-        </Storyboard>
-    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot">
+        <ContentDialog x:Name="content" 
+                       PrimaryButtonText="Donec suscipit" 
+                       SecondaryButtonText="Nulla nec"
+                       PrimaryButtonClick="Content_OnPrimaryButtonClick"
+                       SecondaryButtonClick="Content_OnSecondaryButtonClick">
+            <ContentDialog.Title>
+                <TextBlock x:Name="title" Text="Lorem ipsum dolor sit amet?" />
+            </ContentDialog.Title>
 
-    <Grid x:Name="LayoutRoot" Margin="5">
-        <Border x:Name="content" VerticalAlignment="Top"
-                BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}"
-                BorderThickness="2"
-                HorizontalAlignment="Center"
-                Background="{ThemeResource AppBarBackgroundThemeBrush}">
-            <Grid Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <TextBlock x:Name="title" 
-                           Margin="12,0,12,0" 
-                           HorizontalAlignment="Left" 
-                           Style="{ThemeResource SubtitleTextBlockStyle}" 
-                           TextWrapping="Wrap" 
-                           Text="Lorem ipsum dolor sit amet?"/>
-
+            <ContentDialog.Content>
                 <TextBlock x:Name="message" 
-                           Grid.Row="1" 
-                           Margin="12,12,12,12" 
-                           HorizontalAlignment="Left" 
                            TextWrapping="Wrap" 
                            Text="Nulla consectetur sem a sodales sodales. Fusce ac risus molestie est venenatis gravida vitae a ipsum." />
-
-                <StackPanel Orientation="Horizontal" Grid.Row="2" >
-                    <Button x:Name="yesButton" 
-                        Margin="0,0,30,0" 
-                        HorizontalAlignment="Center" 
-                        MinWidth="130"
-                        Content="Donec suscipit" />
-
-                    <Button x:Name="noButton" 
-                        Margin="0,0,0,0" 
-                        HorizontalAlignment="Center" 
-                        MinWidth="130"
-                        Content="Nulla nec" />
-                </StackPanel>
-            </Grid>
-            <Border.Projection>
-                <PlaneProjection x:Name="xProjection" />
-            </Border.Projection>
-        </Border>
+            </ContentDialog.Content>
+        </ContentDialog>
     </Grid>
 </UserControl>
