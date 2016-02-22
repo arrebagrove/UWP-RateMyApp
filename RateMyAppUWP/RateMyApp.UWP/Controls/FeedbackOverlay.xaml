@@ -11,17 +11,17 @@
     d:DesignWidth="400">
 
     <Grid x:Name="LayoutRoot">
-        <ContentDialog x:Name="content" 
+        <ContentDialog x:Name="DigContent" 
                        PrimaryButtonText="Donec suscipit" 
                        SecondaryButtonText="Nulla nec"
                        PrimaryButtonClick="Content_OnPrimaryButtonClick"
                        SecondaryButtonClick="Content_OnSecondaryButtonClick">
             <ContentDialog.Title>
-                <TextBlock x:Name="title" Text="Lorem ipsum dolor sit amet?" />
+                <TextBlock x:Name="TxtTitle" Text="Lorem ipsum dolor sit amet?" />
             </ContentDialog.Title>
 
             <ContentDialog.Content>
-                <TextBlock x:Name="message" 
+                <TextBlock x:Name="TxtMessage" 
                            TextWrapping="Wrap" 
                            Text="Nulla consectetur sem a sodales sodales. Fusce ac risus molestie est venenatis gravida vitae a ipsum." />
             </ContentDialog.Content>

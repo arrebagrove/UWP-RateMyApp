@@ -24,7 +24,7 @@ namespace RateMyApp.UWP.Controls
     /// </summary>
     public sealed partial class FeedbackOverlay : UserControl
     {
-        // Use this from XAML to control rating title
+        // Use this from XAML to control rating TxtTitle
         #region RatingTitle Dependency Property
 
         public static readonly DependencyProperty RatingTitleProperty =
@@ -44,7 +44,7 @@ namespace RateMyApp.UWP.Controls
 
         #endregion
 
-        // Use this from XAML to control rating message 1
+        // Use this from XAML to control rating TxtMessage 1
         #region RatingMessage1 Dependency Property
 
         public static readonly DependencyProperty RatingMessage1Property =
@@ -64,7 +64,7 @@ namespace RateMyApp.UWP.Controls
 
         #endregion
 
-        // Use this from XAML to control rating message 2
+        // Use this from XAML to control rating TxtMessage 2
         #region RatingMessage2 Dependency Property
 
         public static readonly DependencyProperty RatingMessage2Property =
@@ -124,7 +124,7 @@ namespace RateMyApp.UWP.Controls
 
         #endregion
 
-        // Use this from XAML to control feedback title
+        // Use this from XAML to control feedback TxtTitle
         #region FeedbackTitle Dependency Property
 
         public static readonly DependencyProperty FeedbackTitleProperty =
@@ -381,9 +381,9 @@ namespace RateMyApp.UWP.Controls
         {
             set
             {
-                if (title.Text != value)
+                if (TxtTitle.Text != value)
                 {
-                    title.Text = value;
+                    TxtTitle.Text = value;
                 }
             }
         }
@@ -393,9 +393,9 @@ namespace RateMyApp.UWP.Controls
         {
             set
             {
-                if (message.Text != value)
+                if (TxtMessage.Text != value)
                 {
-                    message.Text = value;
+                    TxtMessage.Text = value;
                 }
             }
         }
@@ -405,9 +405,9 @@ namespace RateMyApp.UWP.Controls
         {
             set
             {
-                if (content.SecondaryButtonText != value)
+                if (DigContent.SecondaryButtonText != value)
                 {
-                    content.SecondaryButtonText = value;
+                    DigContent.SecondaryButtonText = value;
                 }
             }
         }
@@ -417,9 +417,9 @@ namespace RateMyApp.UWP.Controls
         {
             set
             {
-                if (content.PrimaryButtonText != value)
+                if (DigContent.PrimaryButtonText != value)
                 {
-                    content.PrimaryButtonText = value;
+                    DigContent.PrimaryButtonText = value;
                 }
             }
         }
@@ -483,13 +483,13 @@ namespace RateMyApp.UWP.Controls
             if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
             {
                 SetupFirstMessage();
-                await content.ShowAsync();
+                await DigContent.ShowAsync();
 
             }
             else if (FeedbackHelper.Default.State == FeedbackState.SecondReview)
             {
                 SetupSecondMessage();
-                await content.ShowAsync();
+                await DigContent.ShowAsync();
             }
             else
             {
@@ -498,7 +498,7 @@ namespace RateMyApp.UWP.Controls
         }
 
         /// <summary>
-        /// Set up first review message shown after FirstCount launches.
+        /// Set up first review TxtMessage shown after FirstCount launches.
         /// </summary>
         private void SetupFirstMessage()
         {
@@ -509,7 +509,7 @@ namespace RateMyApp.UWP.Controls
         }
 
         /// <summary>
-        /// Set up second review message shown after SecondCount launches.
+        /// Set up second review TxtMessage shown after SecondCount launches.
         /// </summary>
         private void SetupSecondMessage()
         {
@@ -520,7 +520,7 @@ namespace RateMyApp.UWP.Controls
         }
 
         /// <summary>
-        /// Set up feedback message shown after first review message.
+        /// Set up feedback TxtMessage shown after first review TxtMessage.
         /// </summary>
         private void SetupFeedbackMessage()
         {
@@ -655,7 +655,7 @@ namespace RateMyApp.UWP.Controls
 
         private void Content_OnSecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            // LaunchFeedbackEmailAsync message is shown only after first review message.
+            // LaunchFeedbackEmailAsync TxtMessage is shown only after first review TxtMessage.
             if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
             {
                 SetupFeedbackMessage();
