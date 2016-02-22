@@ -105,6 +105,8 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
+    <PRIResource Include="Strings\pl-PL\Resources.resw" />
+    <PRIResource Include="Strings\hu-HU\Resources.resw" />
     <PRIResource Include="Strings\uk-UA\Resources.resw" />
     <PRIResource Include="Strings\vi-VN\Resources.resw" />
     <PRIResource Include="Strings\en-GB\Resources.resw" />
@@ -146,11 +148,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.hr-HR.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\AppResources.hu-HU.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AppResources.hu-HU.resx</DependentUpon>
-    </Compile>
     <Compile Include="Resources\AppResources.it-IT.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -170,11 +167,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.nl-NL.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\AppResources.pl-PL.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AppResources.pl-PL.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\AppResources.pt-BR.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -227,10 +219,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.hr-HR.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\AppResources.hu-HU.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>AppResources.hu-HU.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resources\AppResources.it-IT.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.it-IT.Designer.cs</LastGenOutput>
@@ -246,10 +234,6 @@
     <EmbeddedResource Include="Resources\AppResources.nl-NL.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.nl-NL.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\AppResources.pl-PL.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>AppResources.pl-PL.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AppResources.pt-BR.resx">
       <Generator>ResXFileCodeGenerator</Generator>
