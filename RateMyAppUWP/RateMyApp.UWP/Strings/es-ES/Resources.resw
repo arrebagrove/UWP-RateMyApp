@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,47 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ResourceFlowDirection" xml:space="preserve">
-    <value>LeftToRight</value>
-    <comment>Controls the FlowDirection for all elements in the RootFrame. Set to the traditional direction of this resource file's language</comment>
-  </data>
-  <data name="ResourceLanguage" xml:space="preserve">
-    <value>es-ES</value>
-    <comment>Controls the Language and ensures that the font for all elements in the RootFrame aligns with the app's language. Set to the language code of this resource file's language.</comment>
-  </data>
-  <data name="FeedbackNo" xml:space="preserve">
-    <value>no gracias</value>
-  </data>
-  <data name="FeedbackMessage1" xml:space="preserve">
-    <value>Lamentamos que no quieras valorar {0}.
-
-Cuentanos tu experiencia o sugierenos como podemos hacerlo mejor.</value>
-  </data>
-  <data name="FeedbackTitle" xml:space="preserve">
-    <value>¿Podemos hacerlo mejor?</value>
-  </data>
-  <data name="FeedbackYes" xml:space="preserve">
-    <value>dar opinion</value>
-  </data>
-  <data name="RatingNo" xml:space="preserve">
-    <value>no gracias</value>
-  </data>
-  <data name="RatingMessage1" xml:space="preserve">
-    <value>Nos gustaria que valorases nuestra app con 5 estrellas.
-
-Tu valoración en la tienda nos ayuda con nuestro trabajo en la app y hacerla aún mejor.</value>
-  </data>
-  <data name="RatingMessage2" xml:space="preserve">
-    <value>¡Parece que usas bastante nuestra aplicación!
-
-¿Por que no lo demuestras valorandonos con 5 estrellas?</value>
-  </data>
-  <data name="RatingTitle" xml:space="preserve">
-    <value>¿Disfrutas {0}?</value>
-  </data>
-  <data name="RatingYes" xml:space="preserve">
-    <value>valorar 5 estrellas</value>
-  </data>
   <data name="FeedbackBody" xml:space="preserve">
     <value>[Tu opinión aqui]
 
@@ -172,7 +131,48 @@ Versión Aplicación: {4}
 Nota: El intercambio de email queda sujeto a los terminos y condiciones de privacidad de {5}.Mas detalles en la sección "Acerca de" de la aplicación.
 </value>
   </data>
+  <data name="FeedbackMessage1" xml:space="preserve">
+    <value>Lamentamos que no quieras valorar {0}.
+
+Cuentanos tu experiencia o sugierenos como podemos hacerlo mejor.</value>
+  </data>
+  <data name="FeedbackNo" xml:space="preserve">
+    <value>no gracias</value>
+  </data>
   <data name="FeedbackSubject" xml:space="preserve">
     <value>{0} Opinión del usuario</value>
+  </data>
+  <data name="FeedbackTitle" xml:space="preserve">
+    <value>¿Podemos hacerlo mejor?</value>
+  </data>
+  <data name="FeedbackYes" xml:space="preserve">
+    <value>dar opinion</value>
+  </data>
+  <data name="RatingMessage1" xml:space="preserve">
+    <value>Nos gustaria que valorases nuestra app con 5 estrellas.
+
+Tu valoración en la tienda nos ayuda con nuestro trabajo en la app y hacerla aún mejor.</value>
+  </data>
+  <data name="RatingMessage2" xml:space="preserve">
+    <value>¡Parece que usas bastante nuestra aplicación!
+
+¿Por que no lo demuestras valorandonos con 5 estrellas?</value>
+  </data>
+  <data name="RatingNo" xml:space="preserve">
+    <value>no gracias</value>
+  </data>
+  <data name="RatingTitle" xml:space="preserve">
+    <value>¿Disfrutas {0}?</value>
+  </data>
+  <data name="RatingYes" xml:space="preserve">
+    <value>valorar 5 estrellas</value>
+  </data>
+  <data name="ResourceFlowDirection" xml:space="preserve">
+    <value>LeftToRight</value>
+    <comment>Controls the FlowDirection for all elements in the RootFrame. Set to the traditional direction of this resource file's language</comment>
+  </data>
+  <data name="ResourceLanguage" xml:space="preserve">
+    <value>es-ES</value>
+    <comment>Controls the Language and ensures that the font for all elements in the RootFrame aligns with the app's language. Set to the language code of this resource file's language.</comment>
   </data>
 </root>
