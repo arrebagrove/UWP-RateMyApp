@@ -24,118 +24,6 @@ namespace RateMyApp.UWP.Controls
     /// </summary>
     public sealed partial class FeedbackOverlay : UserControl
     {
-        public static readonly DependencyProperty VisibilityForDesignProperty =
-            DependencyProperty.Register("VisibilityForDesign", typeof(Visibility), typeof(FeedbackOverlay), new PropertyMetadata(Visibility.Collapsed, null));
-
-        public static void SetVisibilityForDesign(FeedbackOverlay element, Visibility value)
-        {
-            element.SetValue(VisibilityForDesignProperty, value);
-        }
-
-        public static Visibility GetVisibilityForDesign(FeedbackOverlay element)
-        {
-            return (Visibility)element.GetValue(VisibilityForDesignProperty);
-        }
-
-        // Using a DependencyProperty as the backing store for Background.  This enables animation, styling, binding, etc...
-        #region Background Dependency Property
-        public new Brush Background
-        {
-            get { return (Brush)GetValue(BackgroundProperty); }
-            set { SetValue(BackgroundProperty, value); }
-        }
-
-        public new static readonly DependencyProperty BackgroundProperty =
-            DependencyProperty.Register("Background", typeof(Brush), typeof(FeedbackOverlay), new PropertyMetadata(new SolidColorBrush(Colors.Black)));
-        #endregion
-
-        // Using a DependencyProperty as the backing store for Foreground.  This enables animation, styling, binding, etc...
-        #region Foreground Dependency Property
-        public new Brush Foreground
-        {
-            get { return (Brush)GetValue(ForegroundProperty); }
-            set { SetValue(ForegroundProperty, value); }
-        }
-
-        public new static readonly DependencyProperty ForegroundProperty =
-            DependencyProperty.Register("Foreground", typeof(Brush), typeof(FeedbackOverlay), new PropertyMetadata(new SolidColorBrush(Colors.White)));
-        #endregion
-
-        // Use this from XAML to control whether animation is on or off
-        #region EnableAnimation Dependency Property
-
-        public static readonly DependencyProperty EnableAnimationProperty =
-            DependencyProperty.Register("EnableAnimation", typeof(bool), typeof(FeedbackOverlay), new PropertyMetadata(true, null));
-
-        public static void SetEnableAnimation(FeedbackOverlay element, bool value)
-        {
-            element.SetValue(EnableAnimationProperty, value);
-        }
-
-        public static bool GetEnableAnimation(FeedbackOverlay element)
-        {
-            return (bool)element.GetValue(EnableAnimationProperty);
-        }
-
-        #endregion
-
-        // Use this from XAML to control animation duration
-        #region AnimationDuration Dependency Property
-
-        public static readonly DependencyProperty AnimationDurationProperty =
-          DependencyProperty.Register("AnimationDuration", typeof(TimeSpan), typeof(FeedbackOverlay), new PropertyMetadata(new TimeSpan(0, 0, 0, 0, 500), null));
-
-        public static void SetAnimationDuration(FeedbackOverlay element, TimeSpan value)
-        {
-            element.SetValue(AnimationDurationProperty, value);
-        }
-
-        public static TimeSpan GetAnimationDuration(FeedbackOverlay element)
-        {
-            return (TimeSpan)element.GetValue(AnimationDurationProperty);
-        }
-
-        #endregion
-
-
-        // Use this for MVVM binding IsVisible
-        #region IsVisible Dependency Property
-
-        public static readonly DependencyProperty IsVisibleProperty =
-            DependencyProperty.Register("IsVisible", typeof(bool), typeof(FeedbackOverlay), new PropertyMetadata(false, null));
-
-        public static void SetIsVisible(FeedbackOverlay element, bool value)
-        {
-            element.SetValue(IsVisibleProperty, value);
-        }
-
-        public static bool GetIsVisible(FeedbackOverlay element)
-        {
-            return (bool)element.GetValue(IsVisibleProperty);
-        }
-
-        #endregion
-
-        // Use this for MVVM binding IsNotVisible
-        #region IsNotVisible Dependency Property
-
-        public static readonly DependencyProperty IsNotVisibleProperty =
-            DependencyProperty.Register(
-                "IsNotVisible", typeof(bool), typeof(FeedbackOverlay),
-                new PropertyMetadata(true, null));
-
-        public static void SetIsNotVisible(FeedbackOverlay element, bool value)
-        {
-            element.SetValue(IsNotVisibleProperty, value);
-        }
-
-        public static bool GetIsNotVisible(FeedbackOverlay element)
-        {
-            return (bool)element.GetValue(IsNotVisibleProperty);
-        }
-
-        #endregion
-
         // Use this from XAML to control rating title
         #region RatingTitle Dependency Property
 
@@ -488,9 +376,6 @@ namespace RateMyApp.UWP.Controls
 
         #endregion
 
-        // Use this for detecting visibility change on code
-        public event EventHandler VisibilityChanged = null;
-
         // Title of the review/feedback notification
         private string Title
         {
@@ -777,34 +662,13 @@ namespace RateMyApp.UWP.Controls
         /// <param name="visible">True to set visible, otherwise False.</param>
         private async Task SetVisibility(bool visible)
         {
-            bool wasVisible = GetIsVisible(this);
-
             if (visible)
             {
-                SetIsVisible(this, true);
-                SetIsNotVisible(this, false);
-                Visibility = Visibility.Visible;
                 await content.ShowAsync();
             }
             else
             {
-                SetIsVisible(this, false);
-                SetIsNotVisible(this, true);
-                Visibility = Visibility.Collapsed;
             }
-
-            if (wasVisible != visible)
-            {
-                OnVisibilityChanged();
-            }
-        }
-
-        /// <summary>
-        /// Called when visibility changes.
-        /// </summary>
-        private void OnVisibilityChanged()
-        {
-            VisibilityChanged?.Invoke(this, new EventArgs());
         }
 
         /// <summary>
