@@ -13,6 +13,7 @@ Changes to Original RateMyApp Control
 - Remove Visiblity Property (Because by using ContentDialog, we no longer need to set the Visibilty of the Feedback Overlay)
 - Improve code readability
 - Migrate to C#6
+- More Chinese like zh-CN lanugage
 - Remove Windows 8.1 and Windows Phone 8.x projects
 
 Usage
@@ -89,6 +90,7 @@ functionality to your app.
 Tested Device
 ------------
 - Microsoft Surface Pro 3 (Windows 10 Pro v1511)
+- Microsoft Lumia 950 XL (Windows 10 Mobile 14267)
 
 Known Issues
 ------------
