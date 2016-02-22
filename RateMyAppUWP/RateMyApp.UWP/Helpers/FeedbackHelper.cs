@@ -181,9 +181,7 @@ namespace RateMyApp.UWP.Helpers
         {
             try
             {
-                //LaunchCount = StorageHelper.GetSetting<int>(LaunchCountKey);
-
-                LaunchCount = 4;
+                LaunchCount = StorageHelper.GetSetting<int>(LaunchCountKey);
 
                 IsReviewed = StorageHelper.GetSetting<bool>(ReviewedKey);
 

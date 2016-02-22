@@ -672,15 +672,5 @@ namespace RateMyApp.UWP.Controls
                 }
             }
         }
-
-        //private async void Content_OnPrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        //{
-            
-        //}
-
-        //private async void Content_OnSecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        //{
-            
-        //}
     }
 }

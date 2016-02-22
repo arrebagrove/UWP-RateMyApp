@@ -6,10 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:RateMyApp.UWP.Controls"
+    xmlns:helpers="using:RateMyApp.UWP.Helpers"
     mc:Ignorable="d">
-
     <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
         <!-- Feedback overlay -->
         <controls:FeedbackOverlay x:Uid="RMA" x:Name="FeedbackOverlay"
                                       Width="{Binding ElementName=LayoutRoot, Path=Width}"
@@ -17,23 +16,5 @@
                               ApplicationName="Another Funcking App"
                               CompanyName="Superhard"
                               />
-
-        <StackPanel>
-            <TextBlock Text="Some content" />
-            <TextBlock Text="Some content" />
-            <TextBlock Text="Some content" />
-            <TextBlock Text="Some content" />
-            <TextBlock Text="Some content" />
-            <TextBlock Text="Some content" />
-            <TextBlock Text="Some content" />
-            <TextBlock Text="Some content" />
-            <TextBlock Text="Some content" />
-            <Button HorizontalAlignment="Stretch" Content="Some Button" />
-            <TextBlock Text="Some content" />
-            <TextBlock Text="Some content" />
-            <TextBlock Text="Some content" />
-            <TextBlock Text="Some content" />
-        </StackPanel>
-
     </Grid>
 </Page>
