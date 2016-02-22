@@ -2,6 +2,8 @@
 
 The UWP version of Microsoft's https://github.com/Microsoft/rate-my-app
 
+NuGet: https://www.nuget.org/packages/RateMyApp.UWP/
+
 Targeting Platform
 ------------
 - Windows 10 Build 10586+
@@ -18,12 +20,26 @@ Changes to Original RateMyApp Control
 
 Usage
 -----------
+
+To install RateMyApp.UWP, run the following command in the Package Manager Console
+
+`
+PM > Install-Package RateMyApp.UWP
+`
+
+Add a FeedbackOverlay control to your layout page. (e.g. MainPage.xaml)
+
+Required properties:
+
+- FeedbackTo
+- ApplicationName
+- CompanyName
+
 <pre>
 &lt;Grid x:Name=&quot;LayoutRoot&quot; Background=&quot;{ThemeResource ApplicationPageBackgroundThemeBrush}&quot;&gt;
     &lt;!-- Feedback overlay --&gt;
     &lt;controls:FeedbackOverlay x:Uid=&quot;RMA&quot; 
                 x:Name=&quot;FeedbackOverlay&quot;
-                Width=&quot;{Binding ElementName=LayoutRoot, Path=Width}&quot;
                 FeedbackTo=&quot;Edi.Wang@outlook.com&quot;
                 ApplicationName=&quot;Another Funcking App&quot;
                 CompanyName=&quot;Superhard&quot;
@@ -31,6 +47,8 @@ Usage
                 SecondCount=&quot;4&quot; /&gt;
 &lt;/Grid&gt;
 </pre>
+
+Build and Run the app.
 
 Senarios
 -----------
