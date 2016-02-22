@@ -105,6 +105,8 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
+    <PRIResource Include="Strings\uk-UA\Resources.resw" />
+    <PRIResource Include="Strings\vi-VN\Resources.resw" />
     <PRIResource Include="Strings\en-GB\Resources.resw" />
     <PRIResource Include="Strings\de-DE\Resources.resw" />
     <PRIResource Include="Strings\ar-SA\Resources.resw" />
@@ -204,16 +206,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.sv-SE.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\AppResources.uk-UA.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AppResources.uk-UA.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\AppResources.vi-VN.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AppResources.vi-VN.resx</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Properties\RateMyApp.UWP.rd.xml" />
     <EmbeddedResource Include="Resources\AppResources.es-ES.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -282,14 +274,6 @@
     <EmbeddedResource Include="Resources\AppResources.sv-SE.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.sv-SE.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\AppResources.uk-UA.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>AppResources.uk-UA.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\AppResources.vi-VN.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>AppResources.vi-VN.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
