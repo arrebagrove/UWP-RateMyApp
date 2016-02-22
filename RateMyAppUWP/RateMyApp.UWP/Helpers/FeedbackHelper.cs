@@ -14,6 +14,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using Windows.ApplicationModel;
@@ -240,7 +241,7 @@ namespace RateMyApp.UWP.Helpers
             handler?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public async void Review()
+        public async Task ReviewAsync()
         {
             Reviewed();
 

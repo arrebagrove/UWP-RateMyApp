@@ -544,7 +544,7 @@ namespace RateMyApp.UWP.Controls
         /// </summary>
         private async Task ShowFeedback()
         {
-            // Feedback message is shown only after first review message.
+            // LaunchFeedbackEmailAsync message is shown only after first review message.
             if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
             {
                 SetupFeedbackMessage();
@@ -560,15 +560,15 @@ namespace RateMyApp.UWP.Controls
         /// <summary>
         /// Launch market place review.
         /// </summary>
-        private void Review()
+        private async Task OpenStoreReviewAsync()
         {
-            FeedbackHelper.Default.Review();
+            await FeedbackHelper.Default.ReviewAsync();
         }
 
         /// <summary>
         /// Launch feedback email.
         /// </summary>
-        private async void Feedback()
+        private async Task LaunchFeedbackEmailAsync()
         {
             string version = string.Empty;
             var uri = new Uri("ms-appx:///AppxManifest.xml");
@@ -684,15 +684,15 @@ namespace RateMyApp.UWP.Controls
 
             if (FeedbackHelper.Default.State == FeedbackState.FirstReview)
             {
-                Review();
+                await OpenStoreReviewAsync();
             }
             else if (FeedbackHelper.Default.State == FeedbackState.SecondReview)
             {
-                Review();
+                await OpenStoreReviewAsync();
             }
             else if (FeedbackHelper.Default.State == FeedbackState.Feedback)
             {
-                Feedback();
+                LaunchFeedbackEmailAsync();
             }
             FeedbackHelper.Default.State = FeedbackState.Inactive;
         }
