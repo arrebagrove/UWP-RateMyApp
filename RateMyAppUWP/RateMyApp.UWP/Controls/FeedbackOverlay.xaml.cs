@@ -538,29 +538,17 @@ namespace RateMyApp.UWP.Controls
             await FeedbackHelper.Default.ReviewAsync();
         }
 
+        private string GetAppVersion()
+        {
+            var ver = Windows.ApplicationModel.Package.Current.Id.Version;
+            return $"{ver.Major}.{ver.Minor}.{ver.Build}.{ver.Revision}";
+        }
+
         /// <summary>
         /// Launch feedback email.
         /// </summary>
         private async Task LaunchFeedbackEmailAsync()
         {
-            string version = string.Empty;
-            var uri = new Uri("ms-appx:///AppxManifest.xml");
-            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(uri);
-            using (var rastream = await file.OpenReadAsync())
-            using (var appManifestStream = rastream.AsStreamForRead())
-            {
-                using (var reader = XmlReader.Create(appManifestStream, new XmlReaderSettings { IgnoreWhitespace = true, IgnoreComments = true }))
-                {
-                    var doc = XDocument.Load(reader);
-                    var app = doc.Descendants("Identity").FirstOrDefault();
-                    var versionAttribute = app?.Attribute("Version");
-                    if (versionAttribute != null)
-                    {
-                        version = versionAttribute.Value;
-                    }
-                }
-            }
-
             string company = GetCompanyName(this);
             if (company == null || company.Length <= 0)
             {
@@ -575,7 +563,7 @@ namespace RateMyApp.UWP.Controls
                  easClientDeviceInformation.SystemManufacturer,
                  easClientDeviceInformation.SystemFirmwareVersion,
                  easClientDeviceInformation.SystemHardwareVersion,
-                 version,
+                 GetAppVersion(),
                  company);
 
             // Send an Email with attachment
