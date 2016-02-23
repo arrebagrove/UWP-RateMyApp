@@ -1,5 +1,7 @@
 # UWP-RateMyApp
 
+Version: 2.0.1.0
+
 The UWP version of Microsoft's https://github.com/Microsoft/rate-my-app
 
 NuGet: https://www.nuget.org/packages/RateMyApp.UWP/
@@ -112,4 +114,4 @@ Tested Device
 
 Known Issues
 ------------
-- App version is missing in Email content 
+No
