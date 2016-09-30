@@ -109,8 +109,9 @@ functionality to your app.
 
 Tested Device
 ------------
-- Microsoft Surface Pro 3 (Windows 10 Pro v1511)
-- Microsoft Lumia 950 XL (Windows 10 Mobile 14267)
+- Microsoft Surface Pro 3 (Windows 10 Pro v1607)
+- Microsoft Lumia 950 XL (Windows 10 Mobile Build 14393)
+- Microsoft Lumia 640 (Windows 10 Mobile Build 14393)
 
 Known Issues
 ------------
